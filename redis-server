@@ -1,0 +1,22 @@
+# Base ubuntu image
+FROM dockerfile/ubuntu
+
+MAINTAINER joe.engel@rackspace.com
+
+# Pull chris-lea's ppa for most up to date redis-server
+RUN add-apt-repository -y ppa:chris-lea/redis-server
+
+# Update your repos and packages
+RUN apt-get update && apt-get upgrade -y
+
+# Install build-essentials
+RUN apt-get install -y build-essential
+
+# Install redis-server
+RUN apt-get install -y redis-server
+
+# Open up the default redis port
+EXPOSE 6379
+
+# The containers entry point
+ENTRYPOINT ["redis-server"]
